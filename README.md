@@ -74,8 +74,6 @@ Regression-Analysis/
 │   ├── Regression_Analysis.R
 │   └── Regression_Analysis.Rmd
 │
-├── data/
-│   └── https://www.kaggle.com/datasets/quantbruce/real-estate-price-prediction
 │
 ├── output/
 │   ├── Regression_Analysis.html
