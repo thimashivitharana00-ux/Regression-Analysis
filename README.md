@@ -30,8 +30,8 @@ The dataset includes the following variables:
 To reproduce this project:
 
 1. Download the dataset from the Kaggle link above.
-2. Place the downloaded `Real estate.csv` file in the `data/` folder.
-3. Run the R script or R Markdown file.
+2. Update the dataset path in the R Markdown file.
+3. Run the R Markdown file to reproduce the analysis and generate the report.
 
 > **Note:** The dataset is not included in this repository. Please download it directly from Kaggle and follow its license terms.
 
@@ -63,6 +63,8 @@ The following analytical workflow was performed:
 ## Results
 
 The regression model identified several significant predictors of real estate prices. Diagnostic tests indicated that multicollinearity was low, and additional statistical tests were performed to evaluate model assumptions. The project demonstrates the complete workflow of developing and validating a regression model using R.
+The complete analysis report is available here:
+file:///C:/Users/LENOVO/Documents/Projects/Regression%20Analysis/R/RA/Output/Housing.html
 
 
 ## Repository Structure
@@ -70,11 +72,11 @@ The regression model identified several significant predictors of real estate pr
 ```
 Regression-Analysis/
 │
-├── code/
+├── Code/
 │   └── Housing.Rmd
 │
 │
-├── output/
+├── Output/
 │   ├── Housing.html
 │
 |
