@@ -4,6 +4,8 @@
 
 This project develops a Multiple Linear Regression model to predict real estate prices using property and location-related features. The analysis includes data preprocessing, exploratory data analysis (EDA), regression modeling, statistical diagnostics, and visualization. The project was implemented in **R** using **R Markdown**, resulting in a reproducible HTML report.
 
+
+
 ## Objectives
 
 - Explore the housing dataset and understand relationships between variables.
@@ -11,6 +13,7 @@ This project develops a Multiple Linear Regression model to predict real estate 
 - Develop a Multiple Linear Regression model for price prediction.
 - Evaluate the model using statistical measures.
 - Verify regression assumptions through diagnostic tests.
+
 
 
 ## Dataset
@@ -36,6 +39,7 @@ To reproduce this project:
 > **Note:** The dataset is not included in this repository. Please download it directly from Kaggle and follow its license terms.
 
 
+
 ## Technologies Used
 
 - R
@@ -44,6 +48,7 @@ To reproduce this project:
 - ggplot2
 - car
 - lmtest
+
 
 
 ## Methodology
@@ -60,11 +65,13 @@ The following analytical workflow was performed:
 8. Residual diagnostics and visualization
 
 
+
 ## Results
 
 The regression model identified several significant predictors of real estate prices. Diagnostic tests indicated that multicollinearity was low, and additional statistical tests were performed to evaluate model assumptions. The project demonstrates the complete workflow of developing and validating a regression model using R.
 The complete analysis report is available here:
-file:///C:/Users/LENOVO/Documents/Projects/Regression%20Analysis/R/RA/Output/Housing.html
+[View HTML Report](Output/Housing.html)
+
 
 
 ## Repository Structure
