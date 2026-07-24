@@ -1,0 +1,192 @@
+---
+title: "Real estate price prediction"
+output: html_document
+date: "2026-07-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+housing = read.csv("C:/Users/LENOVO/Documents/Projects/Regression Analysis/Real estate.csv",header = T)
+attach(housing)
+```
+
+```{r}
+# Rename the column names
+names(housing) = c("ID","t.date","h.age","distance.MRT","no.stores","la.tude","lo.tude","price")
+names(housing)
+
+# Getting summary of the data set
+summary(housing)
+head(housing)
+```
+
+# Checking for missing values
+```{r}
+sum(is.na(housing))
+```
+#There is no missing values
+
+
+
+
+# Pair each variable to get scatter plots
+```{r}
+pairs(housing)
+```
+
+# Get correlation matrix and round up value for 4 decimal points
+```{r}
+round(cor(housing),4)
+```
+
+
+
+
+
+# Variable selecting using - Adjusted R-squared value
+
+```{r}
+summary(lm(price~t.date, data = housing))$adj.r.squared
+summary(lm(price~h.age, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT, data = housing))$adj.r.squared
+summary(lm(price~no.stores, data = housing))$adj.r.squared
+summary(lm(price~la.tude, data = housing))$adj.r.squared
+summary(lm(price~lo.tude, data = housing))$adj.r.squared
+```
+#0.4524284 is the largerst value, therefore the model: price~distance.MRT 
+
+```{r}
+summary(lm(price~distance.MRT+t.date, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+h.age, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+no.stores, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+la.tude, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+lo.tude, data = housing))$adj.r.squared
+```
+
+#0.4941186 is the largerst value, therefore the model: price ~ distance.MRT + no.stores 
+
+```{r}
+summary(lm(price~distance.MRT+no.stores+t.date, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+no.stores+h.age, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+no.stores+la.tude, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+no.stores+lo.tude, data = housing))$adj.r.squared
+```
+
+#0.5377052 is the largerst value, therefore the model: price ~ distance.MRT + no.stores + h.age
+
+```{r}
+summary(lm(price~distance.MRT+no.stores+h.age+t.date, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+no.stores+h.age+la.tude, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+no.stores+h.age+lo.tude, data = housing))$adj.r.squared
+```
+
+#0.5669409 is the largerst value, therefore the model: price ~ distance.MRT + no.stores + h.age + la.tude
+
+```{r}
+summary(lm(price~distance.MRT+no.stores+h.age+la.tude+t.date, data = housing))$adj.r.squared
+summary(lm(price~distance.MRT+no.stores+h.age+la.tude+lo.tude, data = housing))$adj.r.squared
+```
+
+#0.5771845 is the largerst value, therefore the model: price ~ distance.MRT + no.stores + h.age + la.tude + t.date
+
+```{r}
+summary(lm(price~distance.MRT+no.stores+h.age+la.tude+t.date+lo.tude, data = housing))$adj.r.squared
+```
+#0.5762137 is the largerst value, therefore the model: price ~ distance.MRT + no.stores + h.age + la.tude + t.date
+
+
+# Plot adjusted R-squared values
+```{r}
+plot(c(seq(from=1,to=6)),c(0.4524284,0.4941186,0.5377052, 0.5669409,0.5771845,0.5762137),
+  xlab= "Number of variables in the  model",
+  ylab= "Adjusted R-squared values")
+```
+#According to the plot there is no significant increase between 5th and 6th variable
+#Therefore 6th variable should not include in the model
+#Therefore the model is,
+# price ~ price~distance.MRT+no.stores+h.age+la.tude+t.date
+
+
+```{r}
+lm_model = lm(price~distance.MRT+no.stores+h.age+la.tude+t.date,data = housing)
+summary(lm_model)
+```
+#R^2 = 58.23%, Approximately 58.23% of variability in house price can be explained by this model
+
+
+```{r}
+predicted = predict(lm_model)
+housing$predicted = predict(lm_model)
+plot(housing$price, predicted,
+     xlab = "Actual Price",
+     ylab = "Predicted Price",
+     main = "Actual vs Predicted House Prices",
+     pch = 19)
+
+abline(a = 0, b = 1, col = "red", lwd = 2)
+```
+
+
+
+
+```{r}
+plot(lm_model)
+```
+
+# Check for normality of residuals
+```{r}
+hist(residuals(lm_model))
+```
+
+```{r}
+shapiro.test(residuals(lm_model))
+```
+#The small p-value(< 2.2e-16) indicates that,we can reject the null hypothesis; 
+#Residuals are not normally distributed
+
+
+
+# Check for multicollinearity
+```{r}
+library(car)
+round(vif(lm_model),3)
+```
+#Since all VIF values are below 5 , indicating no evidence of problematic multicollinearity among the predictor variable
+
+
+
+# Check for homoscedasticity
+```{r}
+#install.packages("lmtest")
+library(lmtest)
+
+bptest(lm_model)
+```
+#p = 0.33 > 0.05 (High p-value): Fail to reject H₀; assume homoscedasticity good for standard regression
+
+
+
+# Check for outliers
+#View the Cook's Distance plot
+```{r}
+plot(lm_model, which = 4)
+
+```
+# Rows 149, 271 and 313 are outliers
+
+
+
+
+# Confidence interval
+```{r}
+confint(lm_model)
+```
+
+
+
+
