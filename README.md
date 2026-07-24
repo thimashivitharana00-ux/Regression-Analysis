@@ -71,18 +71,17 @@ The regression model identified several significant predictors of real estate pr
 Regression-Analysis/
 │
 ├── code/
-│   ├── Regression_Analysis.R
-│   └── Regression_Analysis.Rmd
+│   └── Housing.Rmd
 │
 │
 ├── output/
-│   ├── Regression_Analysis.html
+│   ├── Housing.html
 │
 |
 Plots/
-│   ├── Actual_vs_Predicted.png
-│   ├── Residuals_vs_Fitted.png
-│   ├── QQ_Plot.png
+│   ├── Actual vs Predicted house price.png
+│   ├── Residuals vs Fitted.png
+│   ├── Q-Q Residuals.png
 │   └── (other figures)  
 │
 ├── README.md
